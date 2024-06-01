@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import {Text, ActivityIndicator} from 'react-native';
+import {Text, ActivityIndicator, Button} from 'react-native';
 import {RouteProp, useRoute, useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {
   fetchProductDetails,
   resetProductDetails,
 } from '../store/slices/productDetailsSlice';
+import {addToCart} from '../store/slices/cartSlice';
 import {RootStackParamList} from '../AppNavigator';
 import {Container, Title} from '../styles/GlobalStyles';
 
@@ -36,6 +37,19 @@ const ProductDetailsScreen: React.FC = () => {
       dispatch(resetProductDetails());
     };
   }, [dispatch, productId, navigation]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(
+        addToCart({
+          productId: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: 1,
+        }),
+      );
+    }
+  };
 
   if (status === 'loading') {
     return (
@@ -73,6 +87,7 @@ const ProductDetailsScreen: React.FC = () => {
       <Text>
         Availability: {product.isAvailable ? 'Available' : 'Out of Stock'}
       </Text>
+      <Button title="Add to Cart" onPress={handleAddToCart} />
     </Container>
   );
 };

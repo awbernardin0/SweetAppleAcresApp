@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, ListRenderItem, Text} from 'react-native';
+import {FlatList, ListRenderItem, Text, Button, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../store/hooks';
 import {fetchProducts, Product} from '../store/slices/productsSlice';
@@ -51,6 +51,12 @@ const ProductsScreen: React.FC = () => {
           renderItem={renderItem}
         />
       )}
+      <View style={{marginTop: 20}}>
+        <Button
+          title="Go to Checkout"
+          onPress={() => navigation.navigate('Checkout')}
+        />
+      </View>
     </Container>
   );
 };
